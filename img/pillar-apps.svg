@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <defs>
+    <filter id="lime-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="curve-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2A3144" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#2A3144" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- bid-curve background -->
+  <path d="M 80 360 Q 200 220 320 100 L 400 100 L 400 400 L 80 400 Z" fill="url(#curve-grad)" opacity="0.55"/>
+
+  <!-- left axis -->
+  <line x1="86" y1="60" x2="86" y2="370" stroke="#2A3144" stroke-width="1.5"/>
+
+  <!-- highlighted top card -->
+  <g filter="url(#lime-glow)">
+    <rect x="110" y="70" width="240" height="60" rx="12" fill="none" stroke="#B8FF3D" stroke-width="2"/>
+    <rect x="124" y="82" width="36" height="36" rx="9" fill="none" stroke="#B8FF3D" stroke-width="2"/>
+    <rect x="175" y="86" width="120" height="6" rx="3" fill="#B8FF3D"/>
+    <rect x="175" y="104" width="80" height="6" rx="3" fill="#B8FF3D"/>
+  </g>
+
+  <!-- other cards -->
+  <g stroke="#3A4256" stroke-width="1.6" fill="none">
+    <rect x="110" y="150" width="240" height="60" rx="12"/>
+    <rect x="124" y="162" width="36" height="36" rx="9"/>
+    <rect x="175" y="168" width="120" height="6" rx="3" fill="#3A4256"/>
+    <rect x="175" y="184" width="80" height="6" rx="3" fill="#3A4256"/>
+
+    <rect x="110" y="230" width="240" height="60" rx="12"/>
+    <rect x="124" y="242" width="36" height="36" rx="9"/>
+    <rect x="175" y="248" width="120" height="6" rx="3" fill="#3A4256"/>
+    <rect x="175" y="264" width="80" height="6" rx="3" fill="#3A4256"/>
+
+    <rect x="110" y="310" width="240" height="60" rx="12"/>
+    <rect x="124" y="322" width="36" height="36" rx="9"/>
+    <rect x="175" y="328" width="120" height="6" rx="3" fill="#3A4256"/>
+    <rect x="175" y="344" width="80" height="6" rx="3" fill="#3A4256"/>
+  </g>
+</svg>

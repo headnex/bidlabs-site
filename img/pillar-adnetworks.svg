@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <defs>
+    <filter id="blue-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#blue-glow)" stroke="#4F8BFF" stroke-width="2" fill="none" stroke-linecap="round">
+    <!-- 3 source circles -->
+    <circle cx="100" cy="80" r="26"/>
+    <circle cx="200" cy="70" r="26"/>
+    <circle cx="300" cy="80" r="26"/>
+
+    <!-- converging lines to center hub -->
+    <path d="M 105 105 Q 130 150 195 195"/>
+    <path d="M 200 100 L 200 190"/>
+    <path d="M 295 105 Q 270 150 205 195"/>
+
+    <!-- central hexagon hub -->
+    <polygon points="200,180 235,200 235,240 200,260 165,240 165,200"/>
+    <!-- gear detail inside hexagon -->
+    <circle cx="200" cy="220" r="9"/>
+    <circle cx="200" cy="220" r="3" fill="#4F8BFF"/>
+    <g stroke-width="1.6">
+      <line x1="200" y1="205" x2="200" y2="208"/>
+      <line x1="200" y1="232" x2="200" y2="235"/>
+      <line x1="185" y1="220" x2="188" y2="220"/>
+      <line x1="212" y1="220" x2="215" y2="220"/>
+      <line x1="190" y1="210" x2="192" y2="212"/>
+      <line x1="208" y1="228" x2="210" y2="230"/>
+      <line x1="210" y1="210" x2="208" y2="212"/>
+      <line x1="192" y1="228" x2="190" y2="230"/>
+    </g>
+
+    <!-- diverging lines down to dot clusters -->
+    <path d="M 195 260 Q 170 295 130 320"/>
+    <path d="M 200 260 L 200 320"/>
+    <path d="M 205 260 Q 230 295 270 320"/>
+  </g>
+
+  <!-- dot clusters (cohorts) -->
+  <g fill="#4F8BFF" filter="url(#blue-glow)">
+    <!-- cluster 1 -->
+    <circle cx="100" cy="330" r="3"/><circle cx="115" cy="325" r="3"/><circle cx="130" cy="330" r="3"/><circle cx="145" cy="328" r="3"/>
+    <circle cx="105" cy="345" r="3"/><circle cx="120" cy="343" r="3"/><circle cx="135" cy="345" r="3"/>
+    <circle cx="112" cy="360" r="3"/><circle cx="128" cy="360" r="3"/>
+    <!-- cluster 2 -->
+    <circle cx="172" cy="330" r="3"/><circle cx="187" cy="325" r="3"/><circle cx="202" cy="330" r="3"/><circle cx="217" cy="328" r="3"/>
+    <circle cx="177" cy="345" r="3"/><circle cx="192" cy="343" r="3"/><circle cx="207" cy="345" r="3"/>
+    <circle cx="184" cy="360" r="3"/><circle cx="200" cy="360" r="3"/>
+    <!-- cluster 3 -->
+    <circle cx="244" cy="330" r="3"/><circle cx="259" cy="325" r="3"/><circle cx="274" cy="330" r="3"/><circle cx="289" cy="328" r="3"/>
+    <circle cx="249" cy="345" r="3"/><circle cx="264" cy="343" r="3"/><circle cx="279" cy="345" r="3"/>
+    <circle cx="256" cy="360" r="3"/><circle cx="272" cy="360" r="3"/>
+  </g>
+</svg>

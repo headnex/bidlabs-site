@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bidlabs.AI — Engineering-led performance marketing</title>
+  <meta name="description" content="We measure the platforms that decide what users see — bid engines, share-of-voice models, jurisdictional visibility analysis — and engineer around them. For apps, exchanges, and the platforms that rank them." />
+  <meta property="og:title" content="Bidlabs.AI — Engineering-led performance marketing" />
+  <meta property="og:description" content="We measure the platforms that decide what users see, and engineer around them. For apps, exchanges, and the platforms that rank them." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.bidlabs.ai/" />
+  <meta property="og:image" content="https://www.bidlabs.ai/img/og.svg" />
+  <meta property="og:image:width" content="2400" />
+  <meta property="og:image:height" content="1260" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.bidlabs.ai/img/og.svg" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ---------- Reset & tokens ---------- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #07080B;
+      --bg-elev: #0F1117;
+      --surface: #11141C;
+      --surface-2: #161A25;
+      --border: #1F2433;
+      --border-strong: #2A3144;
+      --text: #F4F6FB;
+      --text-dim: #A6AEC2;
+      --text-muted: #6E7689;
+      --lime: #B8FF3D;
+      --cyan: #00E5FF;
+      --magenta: #FF3DA1;
+      --amber: #FFC83D;
+      --gradient: linear-gradient(135deg, #B8FF3D 0%, #00E5FF 60%, #4F8BFF 100%);
+      --gradient-soft: linear-gradient(135deg, rgba(184,255,61,.12) 0%, rgba(0,229,255,.10) 60%, rgba(79,139,255,.08) 100%);
+      --ring: 0 0 0 1px var(--border);
+      --max: 1200px;
+      --pad: clamp(16px, 4vw, 32px);
+      --radius: 14px;
+      --radius-lg: 22px;
+    }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      font-feature-settings: "ss01", "cv11";
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    img, svg { display: block; max-width: 100%; }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; }
+
+    /* ---------- Ambient background ---------- */
+    .bg-world {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url('img/hero-bg.svg');
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      opacity: 0.55;
+      mask-image: linear-gradient(180deg, #000 0%, #000 40%, transparent 90%);
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 40%, transparent 90%);
+    }
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%);
+    }
+    .bg-glow {
+      position: fixed; z-index: 0; pointer-events: none;
+      width: 1100px; height: 1100px; border-radius: 50%;
+      top: -350px; left: 50%; transform: translateX(-50%);
+      background: radial-gradient(closest-side, rgba(184,255,61,0.10), rgba(0,229,255,0.05) 40%, transparent 75%);
+      filter: blur(20px);
+    }
+    .bg-glow-2 {
+      position: fixed; z-index: 0; pointer-events: none;
+      width: 800px; height: 800px; border-radius: 50%;
+      top: 60vh; right: -200px;
+      background: radial-gradient(closest-side, rgba(0,229,255,0.08), transparent 70%);
+      filter: blur(40px);
+    }
+
+    /* ---------- Container ---------- */
+    .container {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--pad);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ---------- Nav ---------- */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      background: rgba(7,8,11,0.65);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 18px; letter-spacing: -0.01em;
+    }
+    .logo-mark {
+      width: 28px; height: 28px; border-radius: 7px;
+      background: var(--gradient);
+      display: grid; place-items: center;
+      box-shadow: 0 0 0 1px rgba(184,255,61,0.35), 0 6px 20px rgba(0,229,255,0.18);
+    }
+    .logo-mark svg { width: 16px; height: 16px; }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { color: var(--text-dim); font-size: 14px; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      padding: 9px 16px; border-radius: 9px;
+      background: var(--text); color: var(--bg);
+      font-weight: 600; font-size: 13.5px;
+      transition: transform .15s, box-shadow .2s;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(244,246,251,0.18); }
+    .nav-burger { display: none; }
+
+    @media (max-width: 760px) {
+      .nav-links a:not(.nav-cta) { display: none; }
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative;
+      padding: clamp(64px, 11vw, 120px) 0 clamp(60px, 9vw, 100px);
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 12px; border-radius: 999px;
+      background: rgba(184,255,61,0.08);
+      border: 1px solid rgba(184,255,61,0.28);
+      color: var(--lime);
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .eyebrow .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 12px var(--lime);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1 } 50% { opacity: .35 } }
+
+    .hero h1 {
+      font-size: clamp(40px, 6.4vw, 76px);
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      font-weight: 700;
+      max-width: 16ch;
+    }
+    .hero h1 .grad {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero p.lede {
+      margin-top: 24px;
+      font-size: clamp(17px, 1.6vw, 21px);
+      color: var(--text-dim);
+      max-width: 56ch;
+      line-height: 1.55;
+    }
+    .hero-cta-row {
+      margin-top: 36px;
+      display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 22px; border-radius: 11px;
+      font-weight: 600; font-size: 15px;
+      transition: transform .15s, box-shadow .2s, background .2s, border-color .2s;
+    }
+    .btn-primary {
+      background: var(--gradient);
+      color: #06080B;
+      box-shadow: 0 0 0 1px rgba(184,255,61,0.4), 0 10px 30px rgba(0,229,255,0.22);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px rgba(184,255,61,0.55), 0 16px 40px rgba(0,229,255,0.32); }
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+    }
+    .btn-ghost:hover { background: var(--surface-2); border-color: #3A4256; }
+
+    .hero-proof {
+      margin-top: 56px;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+    }
+    .hero-proof .stat .num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(26px, 3.6vw, 38px);
+      letter-spacing: -0.02em; font-weight: 600;
+      color: var(--text);
+    }
+    .hero-proof .stat .num .accent { color: var(--lime); }
+    .hero-proof .stat .label {
+      margin-top: 6px;
+      font-size: 13px; color: var(--text-muted);
+      max-width: 22ch;
+    }
+    @media (max-width: 760px) {
+      .hero-proof { grid-template-columns: repeat(2, 1fr); gap: 18px 12px; }
+    }
+
+    /* ---------- Hero visual (data viz panel) ---------- */
+    .hero-viz {
+      margin-top: 64px;
+      position: relative;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0) 30%),
+        var(--surface);
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px var(--border);
+    }
+    .hero-viz::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(184,255,61,0.1), transparent 60%);
+    }
+    .hero-viz-bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.2);
+    }
+    .hero-viz-bar .dot-row { display: flex; gap: 6px; }
+    .hero-viz-bar .dot-row span { width: 10px; height: 10px; border-radius: 50%; background: #2A3144; }
+    .hero-viz-bar .path {
+      margin-left: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; color: var(--text-muted);
+    }
+    .hero-viz-bar .path .seg { color: var(--text-dim); }
+    .hero-viz-bar .path .live { color: var(--lime); }
+    .hero-viz-body {
+      display: grid; grid-template-columns: 1.2fr 1fr;
+      gap: 0;
+    }
+    .hero-viz-body > div { padding: 28px clamp(20px, 3vw, 36px); }
+    .hero-viz-body > div:first-child {
+      border-right: 1px solid var(--border);
+    }
+    .viz-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 18px;
+    }
+    .viz-rows { display: grid; gap: 12px; }
+    .viz-row {
+      display: grid; grid-template-columns: 1.4fr 5fr auto; align-items: center; gap: 14px;
+      font-size: 13.5px;
+    }
+    .viz-row .name { color: var(--text-dim); }
+    .viz-row .bar {
+      height: 8px; border-radius: 4px;
+      background: rgba(255,255,255,0.04);
+      position: relative; overflow: hidden;
+    }
+    .viz-row .bar > i {
+      display: block; height: 100%; border-radius: 4px;
+      background: var(--gradient);
+      box-shadow: 0 0 18px rgba(0,229,255,0.4);
+    }
+    .viz-row .v {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; color: var(--text);
+    }
+    .viz-row.dim .name, .viz-row.dim .v { color: var(--text-muted); }
+    .viz-row.dim .bar > i { background: #2A3144; box-shadow: none; opacity: 0.7; }
+
+    .viz-stack { display: grid; gap: 14px; }
+    .viz-card {
+      padding: 14px 16px; border-radius: 12px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid var(--border);
+    }
+    .viz-card .k {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .viz-card .v {
+      margin-top: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px; letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .viz-card .v .pos { color: var(--lime); }
+    .viz-card .v .neg { color: var(--magenta); }
+    .viz-card .sub { margin-top: 4px; font-size: 12px; color: var(--text-muted); }
+
+    @media (max-width: 860px) {
+      .hero-viz-body { grid-template-columns: 1fr; }
+      .hero-viz-body > div:first-child { border-right: 0; border-bottom: 1px solid var(--border); }
+    }
+
+    /* ---------- Section base ---------- */
+    section { position: relative; z-index: 1; }
+    .section {
+      padding: clamp(72px, 10vw, 130px) 0;
+    }
+    .section-head {
+      max-width: 720px;
+      margin-bottom: clamp(40px, 6vw, 64px);
+    }
+    .section-head .tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 16px;
+    }
+    .section-head h2 {
+      font-size: clamp(30px, 4.6vw, 50px);
+      line-height: 1.05; letter-spacing: -0.028em;
+      font-weight: 700;
+    }
+    .section-head p {
+      margin-top: 18px;
+      font-size: clamp(15.5px, 1.4vw, 18px);
+      color: var(--text-dim);
+      max-width: 60ch;
+    }
+
+    /* ---------- Mechanism ---------- */
+    .mech-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .mech-card {
+      position: relative;
+      padding: 28px;
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      transition: border-color .2s, transform .2s;
+      overflow: hidden;
+    }
+    .mech-card::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: var(--gradient-soft); opacity: 0; transition: opacity .25s;
+    }
+    .mech-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+    .mech-card:hover::before { opacity: 1; }
+    .mech-card .step {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .mech-card h3 {
+      margin-top: 10px;
+      font-size: 22px; line-height: 1.2; letter-spacing: -0.015em;
+      font-weight: 600;
+    }
+    .mech-card p {
+      margin-top: 12px; color: var(--text-dim); font-size: 14.5px; line-height: 1.55;
+    }
+    .mech-card .icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: grid; place-items: center;
+      background: rgba(184,255,61,0.08);
+      border: 1px solid rgba(184,255,61,0.25);
+      color: var(--lime);
+      margin-bottom: 20px;
+      position: relative; z-index: 1;
+    }
+    .mech-card .icon svg { width: 20px; height: 20px; }
+    .mech-card.two .icon { background: rgba(0,229,255,0.08); border-color: rgba(0,229,255,0.25); color: var(--cyan); }
+    .mech-card.three .icon { background: rgba(79,139,255,0.10); border-color: rgba(79,139,255,0.3); color: #6FA7FF; }
+    @media (max-width: 860px) { .mech-grid { grid-template-columns: 1fr; } }
+
+    /* ---------- Pillars ---------- */
+    .pillars {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    }
+    .pillar {
+      position: relative;
+      padding: 32px;
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0) 35%),
+        var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      min-height: 360px;
+      display: flex; flex-direction: column;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .pillar-illo {
+      position: absolute;
+      top: 18px; right: 18px;
+      width: 96px; height: 96px;
+      opacity: 0.85;
+      pointer-events: none;
+      transition: opacity .25s, transform .25s;
+      filter: drop-shadow(0 0 18px rgba(0,0,0,0.4));
+    }
+    .pillar:hover .pillar-illo { opacity: 1; transform: scale(1.04); }
+    @media (max-width: 480px) {
+      .pillar-illo { width: 72px; height: 72px; top: 14px; right: 14px; }
+    }
+    .pillar:hover { transform: translateY(-3px); border-color: var(--border-strong); box-shadow: 0 18px 50px rgba(0,0,0,0.4); }
+    .pillar .num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; letter-spacing: 0.1em; color: var(--text-muted);
+      padding-right: 110px;
+    }
+    .pillar h3 {
+      margin-top: 10px;
+      font-size: 24px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15;
+      padding-right: 110px;
+    }
+    .pillar .sub {
+      margin-top: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px; color: var(--lime);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      padding-right: 110px;
+    }
+    @media (max-width: 480px) {
+      .pillar .num, .pillar h3, .pillar .sub { padding-right: 86px; }
+    }
+    .pillar p {
+      margin-top: 18px; color: var(--text-dim); font-size: 14.5px; line-height: 1.6;
+    }
+    .pillar .what {
+      margin-top: auto; padding-top: 24px;
+      display: grid; gap: 8px;
+    }
+    .pillar .what li {
+      list-style: none;
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 13.5px; color: var(--text-dim);
+    }
+    .pillar .what li::before {
+      content: ""; flex: none;
+      width: 14px; height: 14px; border-radius: 4px;
+      background: rgba(184,255,61,0.12);
+      border: 1px solid rgba(184,255,61,0.35);
+      margin-top: 3px;
+      background-image: linear-gradient(45deg, transparent 45%, var(--lime) 45%, var(--lime) 55%, transparent 55%), linear-gradient(-45deg, transparent 45%, var(--lime) 45%, var(--lime) 55%, transparent 55%);
+      background-size: 8px 8px; background-position: center;
+      background-repeat: no-repeat;
+    }
+    .pillar.two .sub { color: var(--cyan); }
+    .pillar.two .what li::before {
+      background-color: rgba(0,229,255,0.10);
+      border-color: rgba(0,229,255,0.32);
+      background-image: linear-gradient(45deg, transparent 45%, var(--cyan) 45%, var(--cyan) 55%, transparent 55%), linear-gradient(-45deg, transparent 45%, var(--cyan) 45%, var(--cyan) 55%, transparent 55%);
+    }
+    .pillar.three .sub { color: #6FA7FF; }
+    .pillar.three .what li::before {
+      background-color: rgba(79,139,255,0.10);
+      border-color: rgba(79,139,255,0.32);
+      background-image: linear-gradient(45deg, transparent 45%, #6FA7FF 45%, #6FA7FF 55%, transparent 55%), linear-gradient(-45deg, transparent 45%, #6FA7FF 45%, #6FA7FF 55%, transparent 55%);
+    }
+    @media (max-width: 960px) { .pillars { grid-template-columns: 1fr; } }
+
+    /* ---------- Proof / Numbers ---------- */
+    .proof {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background:
+        radial-gradient(ellipse 70% 70% at 20% 0%, rgba(184,255,61,0.08), transparent 60%),
+        radial-gradient(ellipse 70% 70% at 90% 100%, rgba(0,229,255,0.08), transparent 60%),
+        var(--surface);
+      padding: clamp(32px, 5vw, 56px);
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(28px, 4vw, 56px); align-items: center;
+    }
+    .proof h3 {
+      font-size: clamp(26px, 3.4vw, 38px); letter-spacing: -0.028em; line-height: 1.1; font-weight: 700;
+    }
+    .proof p {
+      margin-top: 18px; color: var(--text-dim); font-size: 16px; line-height: 1.6;
+    }
+    .proof-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+    }
+    .proof-card {
+      padding: 22px;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid var(--border-strong);
+    }
+    .proof-card .v {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(30px, 3.6vw, 40px);
+      font-weight: 600; letter-spacing: -0.02em;
+      background: var(--gradient);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .proof-card .k { margin-top: 8px; font-size: 13px; color: var(--text-dim); line-height: 1.45; }
+    @media (max-width: 860px) { .proof { grid-template-columns: 1fr; } }
+
+    /* ---------- Logo strip ---------- */
+    .logos {
+      padding: 36px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-elev);
+    }
+    .logos-inner {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 32px; align-items: center;
+    }
+    .logos .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .logos-row {
+      display: flex; flex-wrap: wrap; gap: clamp(20px, 4vw, 48px);
+      align-items: center;
+    }
+    .logos-row span {
+      font-weight: 600; font-size: 18px; letter-spacing: -0.01em;
+      color: var(--text-dim); opacity: 0.85;
+      transition: opacity .2s, color .2s;
+    }
+    .logos-row span:hover { opacity: 1; color: var(--text); }
+    @media (max-width: 760px) { .logos-inner { grid-template-columns: 1fr; gap: 18px; } }
+
+    /* ---------- Who we work with ---------- */
+    .who-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .who-card {
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+    .who-card .role {
+      font-weight: 600; font-size: 15px; line-height: 1.3;
+    }
+    .who-card .biz {
+      margin-top: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    @media (max-width: 860px) { .who-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .who-grid { grid-template-columns: 1fr; } }
+
+    /* ---------- CTA / Form ---------- */
+    .cta {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr;
+      background: var(--surface);
+    }
+    .cta-side {
+      padding: clamp(32px, 4vw, 56px);
+      background:
+        radial-gradient(ellipse 90% 60% at 0% 0%, rgba(184,255,61,0.12), transparent 60%),
+        radial-gradient(ellipse 90% 60% at 100% 100%, rgba(0,229,255,0.10), transparent 60%),
+        var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .cta-side h2 {
+      font-size: clamp(28px, 3.6vw, 42px); letter-spacing: -0.028em; line-height: 1.08; font-weight: 700;
+    }
+    .cta-side p {
+      margin-top: 18px; color: var(--text-dim); font-size: 16px; line-height: 1.6;
+    }
+    .cta-side .checks {
+      margin-top: 28px;
+      display: grid; gap: 10px;
+    }
+    .cta-side .checks li {
+      list-style: none;
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: 14.5px; color: var(--text-dim);
+    }
+    .cta-side .checks li svg { width: 16px; height: 16px; color: var(--lime); flex: none; margin-top: 4px; }
+    .cta-form-wrap { padding: clamp(28px, 4vw, 48px); }
+
+    form.demo-form {
+      display: grid; gap: 16px;
+    }
+    .field { display: grid; gap: 6px; }
+    .field label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      color: var(--text);
+      padding: 12px 14px;
+      font: inherit;
+      font-size: 14.5px;
+      transition: border-color .15s, box-shadow .15s, background .15s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .field select {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23A6AEC2' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: var(--text-muted); }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none;
+      border-color: var(--lime);
+      box-shadow: 0 0 0 3px rgba(184,255,61,0.16);
+      background: rgba(0,0,0,0.4);
+    }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
+    .form-cta {
+      margin-top: 6px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    .form-cta .legal { font-size: 12px; color: var(--text-muted); max-width: 28ch; }
+    .submit {
+      padding: 14px 22px; border-radius: 11px;
+      background: var(--gradient); color: #06080B;
+      font-weight: 700; font-size: 15px;
+      box-shadow: 0 0 0 1px rgba(184,255,61,0.4), 0 10px 30px rgba(0,229,255,0.22);
+      transition: transform .15s, box-shadow .2s, opacity .2s;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .submit:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px rgba(184,255,61,0.55), 0 16px 40px rgba(0,229,255,0.32); }
+    .submit:disabled { opacity: .55; cursor: progress; transform: none; }
+    .form-msg {
+      display: none;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-top: 6px;
+    }
+    .form-msg.ok { display: block; background: rgba(184,255,61,0.08); border: 1px solid rgba(184,255,61,0.35); color: var(--lime); }
+    .form-msg.err { display: block; background: rgba(255,61,161,0.08); border: 1px solid rgba(255,61,161,0.35); color: #FF8FC3; }
+
+    @media (max-width: 900px) {
+      .cta { grid-template-columns: 1fr; }
+      .cta-side { border-right: 0; border-bottom: 1px solid var(--border); }
+    }
+
+    /* ---------- FAQ ---------- */
+    .faq { display: grid; gap: 10px; }
+    .faq-item {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 20px 22px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      font-weight: 600; font-size: 16px;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: ""; width: 14px; height: 14px; flex: none;
+      background:
+        linear-gradient(90deg, var(--text-dim), var(--text-dim)) center/100% 2px no-repeat,
+        linear-gradient(0deg, var(--text-dim), var(--text-dim)) center/2px 100% no-repeat;
+      transition: transform .2s;
+    }
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+    .faq-item .body { padding: 0 22px 22px; color: var(--text-dim); font-size: 14.5px; line-height: 1.6; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+      padding: 56px 0 36px;
+    }
+    .foot-grid {
+      display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 32px;
+    }
+    .foot-grid h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 14px;
+    }
+    .foot-grid p, .foot-grid a {
+      font-size: 14px; color: var(--text-dim); line-height: 1.6;
+    }
+    .foot-grid a:hover { color: var(--text); }
+    .foot-bottom {
+      margin-top: 44px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+      font-size: 13px; color: var(--text-muted);
+    }
+    @media (max-width: 760px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .foot-grid { grid-template-columns: 1fr; } }
+
+    /* ---------- Reveal animation ---------- */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .eyebrow .dot { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-world"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+  <div class="bg-glow-2"></div>
+
+  <!-- ===== Nav ===== -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="#top" class="logo">
+        <span class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 18 L10 12 L14 16 L20 6" stroke="#06080B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        Bidlabs<span style="color:var(--text-muted);font-weight:500">.AI</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#method">Method</a>
+        <a href="#what-we-do">What we do</a>
+        <a href="#proof">Results</a>
+        <a href="#faq">FAQ</a>
+        <a href="#demo" class="nav-cta">Book a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="container">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span>Engineering-led performance marketing</span>
+        </div>
+        <h1 class="reveal">
+          We engineer the systems<br />
+          that decide what users <span class="grad">actually see</span>.
+        </h1>
+        <p class="lede reveal">
+          Most agencies optimize creative. We measure the platforms underneath — country filters, ranking signals, broker-tier mechanics, hidden visibility flags, regulatory gates — and engineer around them. For apps, exchanges, and the platforms that rank them.
+        </p>
+        <div class="hero-cta-row reveal">
+          <a href="#demo" class="btn btn-primary">
+            Book a 30-min demo
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+          </a>
+          <a href="#method" class="btn btn-ghost">See how it works</a>
+        </div>
+
+        <div class="hero-proof reveal">
+          <div class="stat">
+            <div class="num"><span class="accent">+30%</span></div>
+            <div class="label">registrations within first weeks of launch</div>
+          </div>
+          <div class="stat">
+            <div class="num"><span class="accent">+40%</span></div>
+            <div class="label">first-time deposits (FTD) lift</div>
+          </div>
+          <div class="stat">
+            <div class="num"><span class="accent">+60%</span></div>
+            <div class="label">ROAS, 7-day window</div>
+          </div>
+          <div class="stat">
+            <div class="num">1<span style="color:var(--text-muted)"> / </span>29</div>
+            <div class="label">jurisdictions our client was visible in before we engaged</div>
+          </div>
+        </div>
+
+        <!-- Hero visual: data viz panel -->
+        <div class="hero-viz reveal">
+          <div class="hero-viz-bar">
+            <div class="dot-row"><span></span><span></span><span></span></div>
+            <div class="path">
+              <span class="seg">bidlabs/measurements</span> <span style="color:var(--text-muted)">›</span>
+              <span class="seg">visibility</span> <span style="color:var(--text-muted)">›</span>
+              <span class="live">live</span>
+            </div>
+          </div>
+          <div class="hero-viz-body">
+            <div>
+              <div class="viz-title">Share of visible inventory · per jurisdiction · indexed</div>
+              <div class="viz-rows" id="vizRows">
+                <div class="viz-row"><span class="name">Tier-1 EU</span><span class="bar"><i style="width:88%"></i></span><span class="v">88</span></div>
+                <div class="viz-row"><span class="name">UAE (post-licence)</span><span class="bar"><i style="width:74%"></i></span><span class="v">74</span></div>
+                <div class="viz-row"><span class="name">LATAM</span><span class="bar"><i style="width:52%"></i></span><span class="v">52</span></div>
+                <div class="viz-row"><span class="name">SEA</span><span class="bar"><i style="width:41%"></i></span><span class="v">41</span></div>
+                <div class="viz-row dim"><span class="name">Restricted geos</span><span class="bar"><i style="width:6%"></i></span><span class="v">6</span></div>
+              </div>
+            </div>
+            <div>
+              <div class="viz-title">Signals tracked</div>
+              <div class="viz-stack">
+                <div class="viz-card">
+                  <div class="k">Country filter pass-rate</div>
+                  <div class="v"><span class="pos">82%</span> <span style="color:var(--text-muted);font-size:13px">▲ 41pp</span></div>
+                  <div class="sub">vs. pre-engagement baseline</div>
+                </div>
+                <div class="viz-card">
+                  <div class="k">Avg. CPT, top-funnel keywords</div>
+                  <div class="v">−31%</div>
+                  <div class="sub">while holding 90% SoV</div>
+                </div>
+                <div class="viz-card">
+                  <div class="k">Time-to-rank, top-3</div>
+                  <div class="v">14d</div>
+                  <div class="sub">competitive verticals</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Logos ===== -->
+    <section class="logos">
+      <div class="container logos-inner">
+        <div class="label">Built to work with</div>
+        <div class="logos-row">
+          <span>Apple Search Ads</span>
+          <span>Google Ads</span>
+          <span>Meta</span>
+          <span>TikTok</span>
+          <span>AppsFlyer</span>
+          <span>Adjust</span>
+          <span>Tenjin</span>
+          <span>App Store Connect</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Method ===== -->
+    <section class="section" id="method">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="tag">// Method</span>
+          <h2>Measure the platform. Engineer around it. No guesses, no creative-only tweaks.</h2>
+          <p>Every paid channel and every aggregation platform has a ranking logic underneath. We don't speculate about it — we instrument it, then rebuild your bidding and visibility strategy against what we observe.</p>
+        </div>
+        <div class="mech-grid">
+          <div class="mech-card one reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-7"/></svg>
+            </div>
+            <div class="step">01 · Measure</div>
+            <h3>Read the platform like an engineer.</h3>
+            <p>Country filters, ranking signals, broker-tier mechanics, hidden visibility flags, regulatory gates. We open the platform's developer surface and read what it actually responds with — for every geo that matters to you.</p>
+          </div>
+          <div class="mech-card two reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 7v7c0 5 3.8 8.4 8 9 4.2-.6 8-4 8-9V7Z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <div class="step">02 · Engineer</div>
+            <h3>Build the bid engine and the visibility layer.</h3>
+            <p>Custom bidding logic, share-of-voice models, dynamic budget allocation, and platform-mechanics analytics — wired into your campaigns and into the broader visibility strategy (licensing path, jurisdictional eligibility, partner-tier moves).</p>
+          </div>
+          <div class="mech-card three reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8z"/></svg>
+            </div>
+            <div class="step">03 · Operate</div>
+            <h3>Run it weekly, against measurable goals.</h3>
+            <p>Specific targets — rank, share-of-voice, CPT, FTD, ROAS per cohort — with a weekly report you can hand to a finance lead. No black-box dashboards, no "trust the algorithm."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== What we do (3 pillars) ===== -->
+    <section class="section" id="what-we-do" style="padding-top:0">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="tag">// What we do</span>
+          <h2>Three places where engineering the platform beats optimizing the creative.</h2>
+          <p>Apps and games, exchanges and brokers, ad networks. Same method, different platforms, different constraint stacks.</p>
+        </div>
+        <div class="pillars">
+          <article class="pillar one reveal">
+            <img class="pillar-illo" src="img/pillar-apps.svg" alt="" loading="lazy" />
+            <div class="num">01</div>
+            <h3>Apps &amp; games</h3>
+            <div class="sub">Apple Search Ads · app-store channels</div>
+            <p>Proprietary keyword and bid optimization. Low-level signals from iOS devices and the ASA system feed a bid engine that holds top rank on high-volume terms while compressing CPT.</p>
+            <ul class="what">
+              <li>#1 rank on competitive head terms</li>
+              <li>Up to 90% share-of-voice on target keywords</li>
+              <li>CPT down 30%+ at equivalent volume</li>
+              <li>Multi-locale roll-out via market mechanics</li>
+            </ul>
+          </article>
+          <article class="pillar two reveal">
+            <img class="pillar-illo" src="img/pillar-exchanges.svg" alt="" loading="lazy" />
+            <div class="num">02</div>
+            <h3>Exchanges &amp; brokers</h3>
+            <div class="sub">Visibility · ranking · licensing path</div>
+            <p>Visibility analysis across the platforms that route retail traders to financial products. The dominant filter is local licensing — not reviews, not tier. We measure your footprint per jurisdiction and engineer the path that actually expands it.</p>
+            <ul class="what">
+              <li>Per-country visibility audit (29+ jurisdictions)</li>
+              <li>Competitive footprint vs. peer exchanges</li>
+              <li>Licensing path that unlocks the geos that matter</li>
+              <li>Partner-panel and broker-tier optimization</li>
+            </ul>
+          </article>
+          <article class="pillar three reveal">
+            <img class="pillar-illo" src="img/pillar-adnetworks.svg" alt="" loading="lazy" />
+            <div class="num">03</div>
+            <h3>Ad networks</h3>
+            <div class="sub">Meta · Google · TikTok · paid channels</div>
+            <p>Performance campaigns across the major paid channels for fintech and high-CAC verticals. Same engineering bias: instrument what the platform rewards, then build budget allocation and creative variants against the signals — not against guesses.</p>
+            <ul class="what">
+              <li>Cross-channel attribution that survives audit</li>
+              <li>Cohort-level ROAS, not blended vanity ROAS</li>
+              <li>Custom signals into Meta/Google bidding</li>
+              <li>Built for $100k+/mo paid budgets</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Proof / Results ===== -->
+    <section class="section" id="proof" style="padding-top:0">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="tag">// Proof</span>
+          <h2>Numbers that survive a finance review.</h2>
+          <p>Every figure below is measured in our own instrumentation and reproducible inside the client's analytics stack. No blended metrics, no platform-self-reported lift.</p>
+        </div>
+        <div class="proof reveal">
+          <div>
+            <h3>What we delivered on the last engagement set.</h3>
+            <p>One mid-size exchange entered our engagement visible in <span class="mono" style="color:var(--text)">1 of 29</span> target jurisdictions. After the licensing path we mapped landed, that footprint expanded inside weeks — the same pattern we have seen replicated when a peer secured a UAE licence and gained visibility on the major charting platform's per-country broker selector.</p>
+            <p style="margin-top:14px"><span style="color:var(--text)">For a fintech app client:</span> 90% share-of-voice on the most competitive head terms, CPT down 31% at equivalent volume, ROAS up 60% over a 7-day window.</p>
+          </div>
+          <div class="proof-grid">
+            <div class="proof-card"><div class="v">+30%</div><div class="k">Registrations within the first weeks of launch.</div></div>
+            <div class="proof-card"><div class="v">+40%</div><div class="k">FTD growth (first-time depositors) on the same period.</div></div>
+            <div class="proof-card"><div class="v">+60%</div><div class="k">ROAS, 7-day window, on regulated-vertical paid spend.</div></div>
+            <div class="proof-card"><div class="v">1 → N</div><div class="k">Jurisdictions opened by mapping the licensing path correctly.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Who we work with ===== -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="tag">// Fit</span>
+          <h2>Who this is for.</h2>
+          <p>If one of these describes you and you spend $100k+/month on paid acquisition, we should talk.</p>
+        </div>
+        <div class="who-grid">
+          <div class="who-card reveal">
+            <div class="role">CMOs &amp; Growth Directors</div>
+            <div class="biz">Exchanges · brokers · fintech</div>
+          </div>
+          <div class="who-card reveal">
+            <div class="role">Marketing Leads</div>
+            <div class="biz">Mobile games · app publishers</div>
+          </div>
+          <div class="who-card reveal">
+            <div class="role">BD &amp; Partnerships</div>
+            <div class="biz">Regulated platforms</div>
+          </div>
+          <div class="who-card reveal">
+            <div class="role">Founders, pre-Series B</div>
+            <div class="biz">"Why am I invisible in X market?"</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Demo CTA + Form ===== -->
+    <section class="section" id="demo" style="padding-top:0">
+      <div class="container">
+        <div class="cta reveal">
+          <div class="cta-side">
+            <div>
+              <span class="tag" style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cyan)">// Demo</span>
+              <h2 style="margin-top:14px">Book a 30-minute call. Leave with a visibility map of your own platform.</h2>
+              <p>We will walk through a live measurement of your current visibility on the platforms relevant to your vertical — per geo, against your competitive set. You decide afterwards whether there is anything to engineer.</p>
+            </div>
+            <ul class="checks">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>30 minutes, no slide deck, just data on your platform.</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Mutual NDA available before any internal numbers change hands.</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Real engineer on the call — not a sales generalist.</li>
+            </ul>
+          </div>
+          <div class="cta-form-wrap">
+            <form class="demo-form" id="demoForm" autocomplete="on">
+              <!-- Web3Forms config -->
+              <input type="hidden" name="access_key" value="e008da7b-dc4a-4503-bfc1-601a383207fc" />
+              <input type="hidden" name="subject" value="New demo request — bidlabs.ai" />
+              <input type="hidden" name="from_name" value="Bidlabs.AI site" />
+              <input type="checkbox" name="botcheck" style="display:none" />
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="name">Name</label>
+                  <input id="name" name="name" type="text" placeholder="Alex Carter" required minlength="2" />
+                </div>
+                <div class="field">
+                  <label for="email">Work email</label>
+                  <input id="email" name="email" type="email" placeholder="alex@company.com" required />
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="company">Company</label>
+                  <input id="company" name="company" type="text" placeholder="Company name" required />
+                </div>
+                <div class="field">
+                  <label for="role">Role</label>
+                  <input id="role" name="role" type="text" placeholder="Head of Growth / CMO / BD" required />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="vertical">Vertical</label>
+                <select id="vertical" name="vertical" required>
+                  <option value="" disabled selected>Select one</option>
+                  <option>Crypto exchange</option>
+                  <option>FX / CFD broker</option>
+                  <option>Fintech app</option>
+                  <option>Mobile game / app publisher</option>
+                  <option>iGaming</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div class="form-cta">
+                <p class="legal">By submitting you agree to be contacted by Bidlabs.AI about your enquiry.</p>
+                <button class="submit" type="submit" id="submitBtn">
+                  <span>Request demo</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </button>
+              </div>
+
+              <div class="form-msg" id="formMsg"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section" id="faq" style="padding-top:0">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="tag">// FAQ</span>
+          <h2>Things prospects usually ask first.</h2>
+        </div>
+        <div class="faq">
+          <details class="faq-item reveal">
+            <summary>Are you an agency or a platform?</summary>
+            <div class="body">Neither, exactly. We are a performance-marketing team with a custom engineering layer underneath. We run the campaigns and we build the bid engines and visibility models that the campaigns rely on. The two halves do not separate cleanly.</div>
+          </details>
+          <details class="faq-item reveal">
+            <summary>What is the minimum monthly spend that makes sense?</summary>
+            <div class="body">Around $100k/month in paid acquisition is where the engineering effort returns. Below that, an off-the-shelf agency is usually the right call — and we will say so on the demo.</div>
+          </details>
+          <details class="faq-item reveal">
+            <summary>Do you work with regulated verticals — crypto, FX, fintech?</summary>
+            <div class="body">Most of our recent pipeline is in those verticals. In regulated markets the marketing problem flips: creative optimization is downstream of regulatory eligibility. We start with the licensing and jurisdictional layer, then run paid against the geos where you are actually eligible.</div>
+          </details>
+          <details class="faq-item reveal">
+            <summary>How long does the first engagement run?</summary>
+            <div class="body">Typical first phase is a measurement and optimization cycle of 8–12 weeks, with weekly readouts. We do not sell long lock-ins — we sell weeks where the numbers move.</div>
+          </details>
+          <details class="faq-item reveal">
+            <summary>Will you name your clients?</summary>
+            <div class="body">Not in public materials. We will name comparable engagements on the demo call under NDA. Anonymized data points on this site are real and measured in our own instrumentation.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="container">
+      <div class="foot-grid">
+        <div>
+          <a href="#top" class="logo" style="margin-bottom:14px">
+            <span class="logo-mark">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 18 L10 12 L14 16 L20 6" stroke="#06080B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Bidlabs<span style="color:var(--text-muted);font-weight:500">.AI</span>
+          </a>
+          <p style="margin-top:14px;max-width:42ch">Engineering-led performance marketing for apps, exchanges, and the platforms that rank them.</p>
+        </div>
+        <div>
+          <h4>Office</h4>
+          <p>Bidlabs.AI Ltd<br/>Griva Digeni, 51 ATHINAION COURT<br/>Flat/Office 202<br/>8047, Paphos, Cyprus</p>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <p>
+            <a href="mailto:bd@bidlabs.ai">bd@bidlabs.ai</a><br/>
+            <a href="tel:+357255051">+357 25 505 1</a><br/>
+            <a href="https://www.linkedin.com/company/bidlabsai" target="_blank" rel="noopener">LinkedIn</a>
+          </p>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 Bidlabs.AI Ltd. All rights reserved.</span>
+        <span>Last engineering rebuild: <span class="mono" style="color:var(--text-dim)">2026-05-25</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Reveal on scroll
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function (el) { io.observe(el); });
+    })();
+
+    // Form submit -> Web3Forms
+    (function () {
+      var form = document.getElementById('demoForm');
+      var btn = document.getElementById('submitBtn');
+      var msg = document.getElementById('formMsg');
+      if (!form) return;
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        msg.className = 'form-msg';
+        msg.textContent = '';
+        btn.disabled = true;
+
+        var fd = new FormData(form);
+        try {
+          var res = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: fd
+          });
+          var data = await res.json();
+          if (res.ok && data.success) {
+            msg.className = 'form-msg ok';
+            msg.textContent = 'Thanks — request received. We will reply from bd@bidlabs.ai within one business day.';
+            form.reset();
+          } else {
+            msg.className = 'form-msg err';
+            msg.textContent = (data && data.message) || 'Something went wrong. Please email bd@bidlabs.ai directly.';
+          }
+        } catch (err) {
+          msg.className = 'form-msg err';
+          msg.textContent = 'Network error. Please email bd@bidlabs.ai directly.';
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
